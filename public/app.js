@@ -281,6 +281,7 @@
     S.pdfBlob = null; const b = await pdfBlob(); if (!b) return;
     if (S.pdfUrl) URL.revokeObjectURL(S.pdfUrl); S.pdfUrl = URL.createObjectURL(b);
     const f = $('#preview'); f.src = S.pdfUrl; f.classList.remove('hidden');
+    $('#previewOpen').href = S.pdfUrl; $('#previewFallback').classList.remove('hidden');
   };
   $('#btnPdf').onclick = async () => { S.pdfBlob = null; const b = await pdfBlob(); if (b) save(b, fname('pdf')); };
   $('#btnPptx').onclick = async () => { const b = await call('pptx'); if (b) save(b, fname('pptx')); };

@@ -9,6 +9,7 @@ Google Sheet ──export CSV/XLSX──▶ [browser: map columns, compute, edit
 * **Your raw sheet never leaves the browser.** Only the finished report content (totals, top themes, chosen quotes, your text, optional screenshots) is posted to the server, rendered in memory, and discarded. Nothing is stored.
 * No AI service, no Google/Canva API keys, no database.
 * Charts and tables in the PPTX are native PowerPoint objects (editable).
+* Mobile-friendly, installable (Add to Home Screen) with a splash screen, and self-updating — see [Mobile / PWA](#mobile--pwa) below.
 
 ## How a weekly run works
 1. Export the Google Sheet tab as CSV (File ▸ Download) — or XLSX.
@@ -50,6 +51,11 @@ Sizing: PDF rendering uses LibreOffice (~300–600 MB RAM while converting). Rai
 | `PDF_TIMEOUT_MS` | 150000 | Max time for one PDF conversion |
 | `RATE_LIMIT_PER_MIN` | 20 | Max `/api/generate` requests per minute per IP |
 
+## Mobile / PWA
+* **Responsive UI:** layout, tables, touch targets and form inputs adapt below 640px (no iOS auto-zoom on inputs, horizontally-scrollable tables instead of squished columns, 2-column KPI grid, safe-area padding for notched phones).
+* **Splash screen:** a branded loading screen (`public/splash.js` + CSS in `public/style.css`) shows on every page load and fades out once the app is ready. `public/manifest.json` + `public/icons/` also give the app a proper icon and OS-generated splash when added to a phone's home screen (Android reads `manifest.json`; iOS uses the `apple-touch-icon` meta tags in `index.html`). Regenerate the icon set with `node scripts/make-icons.js` after changing `assets/logo.png`.
+* **Always-fresh updates:** the server stamps a `VERSION` (from `package.json` + process boot time) and exposes it at `GET /version`. `public/version-check.js` checks it on load, on an interval, and whenever the tab regains focus; on a mismatch it shows a "Reload" banner. Combined with the server's `Cache-Control: no-store` on every response, a normal reload is enough to pick up a new deploy — no need to clear site data or cache.
+
 ## Fonts
 The design uses **League Spartan** (titles) and **Poppins** (body) — both free Google fonts, bundled in `fonts/` (OFL license) for the PDF. For `.pptx` files to look right on a PC, install those two fonts there too (otherwise PowerPoint substitutes a default font).
 
@@ -72,10 +78,11 @@ lib/deck.js          17-slide builder (pptxgenjs) — geometry measured from the
 lib/pdf.js           LibreOffice PPTX→PDF
 lib/validate.js      Sanitises the incoming report JSON
 public/              UI (index.html, app.js, analyze.js = metrics engine, vendor/ = PapaParse + SheetJS)
+                     splash.js + version-check.js = splash screen / update banner, manifest.json + icons/ = PWA
 assets/ fonts/       Cover art, logo, fonts (taken from your reference deck)
 sample-data/         FICTIONAL demo CSV + mock screenshots
 sample-output/       Demo PPTX/PDF produced from the fictional data
-scripts/             make-sample.js, make-screenshots.js, test.js
+scripts/             make-sample.js, make-screenshots.js, make-icons.js, test.js
 ```
 `npm test` regenerates a demo report end-to-end and checks totals, sorting and pie sums.
 

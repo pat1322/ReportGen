@@ -2,11 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Weekly Report Generator</title>
+<meta name="description" content="Turn a weekly interaction-data export into an editable PowerPoint or PDF report.">
+<meta name="theme-color" content="#201D22">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Report Gen">
 <link rel="stylesheet" href="style.css">
+<script src="splash.js" defer></script>
 </head>
 <body>
+<div id="splash" role="status" aria-live="polite"><div class="mark"></div><div class="name">Weekly Report Generator</div></div>
 <header class="top">
   <div class="brand"><span class="dot"></span> Weekly Report Generator</div>
   <nav class="steps" id="steps">
@@ -32,9 +43,9 @@
   </div>
   <div class="card">
     <h3>Expected shape (one row per interaction)</h3>
-    <table class="mini"><thead><tr><th>Date</th><th>Channel</th><th>Category</th><th>Message</th><th>Response</th></tr></thead>
+    <div class="tablewrap"><table class="mini"><thead><tr><th>Date</th><th>Channel</th><th>Category</th><th>Message</th><th>Response</th></tr></thead>
     <tbody><tr><td>2026-09-24</td><td>Private Message</td><td>App Login Issue</td><td>customer's message</td><td>reply sent</td></tr>
-    <tr><td>2026-09-24</td><td>Seeded Post</td><td>OTP Not Received</td><td>the seeded post text</td><td><i>(blank)</i></td></tr></tbody></table>
+    <tr><td>2026-09-24</td><td>Seeded Post</td><td>OTP Not Received</td><td>the seeded post text</td><td><i>(blank)</i></td></tr></tbody></table></div>
     <p class="note">Your column names can be anything — you map them in step 2. Seeded replies: put the original post in <i>Message</i> and the seeded reply in <i>Response</i>. A numeric <i>Count</i> column is optional (default 1 per row). Several tabs? Combine them into one tab first (see docs).</p>
   </div>
 </section>
@@ -95,6 +106,7 @@
     <div id="exportMsg" class="note"></div>
   </div>
   <iframe id="preview" title="Report preview" class="hidden"></iframe>
+  <p id="previewFallback" class="note hidden">Preview not showing? <a id="previewOpen" href="#" target="_blank" rel="noopener">Open the PDF in a new tab</a> instead (some mobile browsers don't render PDFs inline).</p>
   <div class="card"><h3>Final review checklist</h3>
   <ul class="check-list">
     <li>Totals and rankings match your source sheet</li><li>Quotes are the real messages/responses (flagged ones checked)</li><li>All <span class="ph">[[placeholders]]</span> replaced</li>
@@ -106,5 +118,6 @@
 <script src="vendor/xlsx.full.min.js"></script>
 <script src="analyze.js"></script>
 <script src="app.js"></script>
+<script src="version-check.js"></script>
 </body>
 </html>

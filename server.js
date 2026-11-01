@@ -31,10 +31,15 @@ if (PASSWORD) {
 app.use((_req, res, next) => {
   res.set({
     'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Cache-Control': 'no-store',
-    'X-Frame-Options': 'DENY', 'Content-Security-Policy': "default-src 'self'; img-src 'self' data:; object-src 'none'; frame-ancestors 'none'",
+    'X-Frame-Options': 'DENY', 'Content-Security-Policy': "default-src 'self'; img-src 'self' data:; frame-src 'self' blob:; object-src 'none'; frame-ancestors 'none'",
   });
   next();
 });
+/* Changes every process start (i.e. every deploy), so the client can detect a new release
+   without any git/build-time info. Paired with public/version-check.js. */
+const VERSION = require('./package.json').version + '+' + Date.now().toString(36);
+app.get('/version', (_req, res) => res.json({ version: VERSION }));
+
 app.use(express.static(path.join(__dirname, 'public'), { index: 'index.html', cacheControl: false }));
 app.use('/sample-data', express.static(path.join(__dirname, 'sample-data')));
 
