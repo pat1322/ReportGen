@@ -2,3 +2,6 @@ node_modules
 test-output
 .git
 *.log
+.github
+*.md
+sample-output

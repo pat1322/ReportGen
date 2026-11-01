@@ -29,14 +29,35 @@ if (PASSWORD) {
 }
 
 app.use((_req, res, next) => {
-  res.set({ 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Cache-Control': 'no-store' });
+  res.set({
+    'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Cache-Control': 'no-store',
+    'X-Frame-Options': 'DENY', 'Content-Security-Policy': "default-src 'self'; img-src 'self' data:; object-src 'none'; frame-ancestors 'none'",
+  });
   next();
 });
 app.use(express.static(path.join(__dirname, 'public'), { index: 'index.html', cacheControl: false }));
 app.use('/sample-data', express.static(path.join(__dirname, 'sample-data')));
 
+/* Minimal in-memory rate limit: /api/generate drives LibreOffice (heavy, ~300-600MB RAM per conversion). */
+const RATE_LIMIT = Number(process.env.RATE_LIMIT_PER_MIN || 20);
+const hits = new Map();
+function rateLimited(req, res, next) {
+  const key = req.ip;
+  const now = Date.now();
+  const windowStart = now - 60000;
+  const times = (hits.get(key) || []).filter((t) => t > windowStart);
+  if (times.length >= RATE_LIMIT) {
+    res.set('Retry-After', '60');
+    return res.status(429).json({ error: 'Too many requests. Please wait a moment and try again.' });
+  }
+  times.push(now);
+  hits.set(key, times);
+  next();
+}
+setInterval(() => { const cutoff = Date.now() - 60000; for (const [k, v] of hits) { const t = v.filter((x) => x > cutoff); if (t.length) hits.set(k, t); else hits.delete(k); } }, 60000).unref();
+
 /* Stateless: the report JSON is rendered in memory and never written to disk (PDF uses a temp dir deleted after conversion). */
-app.post('/api/generate', express.json({ limit: '60mb' }), async (req, res) => {
+app.post('/api/generate', rateLimited, express.json({ limit: '60mb' }), async (req, res) => {
   try {
     const format = req.query.format === 'pdf' ? 'pdf' : 'pptx';
     const report = normalizeReport(req.body && req.body.report);

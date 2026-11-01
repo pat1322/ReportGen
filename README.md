@@ -48,6 +48,7 @@ Sizing: PDF rendering uses LibreOffice (~300–600 MB RAM while converting). Rai
 | `PORT` | set by Railway | |
 | `PDF_CONCURRENCY` | 2 | Parallel PDF conversions |
 | `PDF_TIMEOUT_MS` | 150000 | Max time for one PDF conversion |
+| `RATE_LIMIT_PER_MIN` | 20 | Max `/api/generate` requests per minute per IP |
 
 ## Fonts
 The design uses **League Spartan** (titles) and **Poppins** (body) — both free Google fonts, bundled in `fonts/` (OFL license) for the PDF. For `.pptx` files to look right on a PC, install those two fonts there too (otherwise PowerPoint substitutes a default font).
