@@ -1,0 +1,19 @@
+{
+  "name": "weekly-report-generator",
+  "version": "1.0.0",
+  "description": "Online weekly report generator: upload interaction data, review, download PPTX/PDF",
+  "main": "server.js",
+  "private": true,
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server.js",
+    "sample": "node scripts/make-sample.js",
+    "test": "node scripts/test.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "jszip": "^3.10.1",
+    "pptxgenjs": "^3.12.0",
+    "sharp": "^0.33.5"
+  }
+}

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weekly Report Generator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="dot"></span> Weekly Report Generator</div>
+  <nav class="steps" id="steps">
+    <button data-go="s1" class="on">1 · Data</button>
+    <button data-go="s2">2 · Map &amp; settings</button>
+    <button data-go="s3">3 · Review &amp; edit</button>
+    <button data-go="s4">4 · Export</button>
+  </nav>
+</header>
+
+<main>
+<!-- STEP 1 -->
+<section id="s1" class="step on">
+  <h1>1 · Load your data</h1>
+  <p class="lead">Upload the CSV / Excel export of your Google Sheet (one row per interaction). <b>The file is read inside your browser</b> — only the final report content (totals, top themes, chosen quotes, text) is sent to the server to draw the slides, and nothing is stored.</p>
+  <div class="card drop" id="drop">
+    <input type="file" id="file" accept=".csv,.tsv,.xlsx,.xls,.txt" hidden>
+    <button class="primary" id="pick">Choose CSV / XLSX file</button>
+    <span class="or">or</span>
+    <button id="useSample">Try with fictional sample data</button>
+    <div id="fileInfo" class="note"></div>
+    <label id="sheetWrap" class="hidden">Sheet / tab: <select id="sheetSel"></select></label>
+  </div>
+  <div class="card">
+    <h3>Expected shape (one row per interaction)</h3>
+    <table class="mini"><thead><tr><th>Date</th><th>Channel</th><th>Category</th><th>Message</th><th>Response</th></tr></thead>
+    <tbody><tr><td>2026-09-24</td><td>Private Message</td><td>App Login Issue</td><td>customer's message</td><td>reply sent</td></tr>
+    <tr><td>2026-09-24</td><td>Seeded Post</td><td>OTP Not Received</td><td>the seeded post text</td><td><i>(blank)</i></td></tr></tbody></table>
+    <p class="note">Your column names can be anything — you map them in step 2. Seeded replies: put the original post in <i>Message</i> and the seeded reply in <i>Response</i>. A numeric <i>Count</i> column is optional (default 1 per row). Several tabs? Combine them into one tab first (see docs).</p>
+  </div>
+</section>
+
+<!-- STEP 2 -->
+<section id="s2" class="step">
+  <h1>2 · Map columns &amp; set the period</h1>
+  <div class="grid2">
+    <div class="card">
+      <h3>Column mapping</h3>
+      <div id="mapFields"></div>
+      <p class="note">Required: Channel and Category. Message/Response are needed for the quote tables.</p>
+    </div>
+    <div class="card">
+      <h3>Which values belong to which channel?</h3>
+      <div id="chanMap"></div>
+      <p class="note">Rows whose channel value isn't ticked anywhere are ignored (and counted in the warnings).</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Report settings</h3>
+    <div class="grid4">
+      <label>Report title<input id="title" value="WEEKLY REPORT"></label>
+      <label>Organization / brand (optional)<input id="brand" placeholder="e.g. Acme Digital Bank"></label>
+      <label>Period start<input type="date" id="start"></label>
+      <label>Period end<input type="date" id="end"></label>
+      <label>Previous period start (optional)<input type="date" id="pstart"></label>
+      <label>Previous period end (optional)<input type="date" id="pend"></label>
+      <label>Rows in tables (private / public / posts)<input type="number" id="topN" min="3" max="5" value="5"></label>
+      <label>Rows in seeded replies table<input type="number" id="topNr" min="2" max="5" value="4"></label>
+    </div>
+    <p class="note">Leave the previous period empty to auto-use the equally long period right before the start date — trends are only mentioned if that period actually contains data. If your sheet has no dates, leave all dates empty and type the period in step 3.</p>
+    <button class="primary" id="build">Build draft report →</button>
+    <span id="buildMsg" class="note"></span>
+  </div>
+</section>
+
+<!-- STEP 3 -->
+<section id="s3" class="step">
+  <h1>3 · Review &amp; edit</h1>
+  <div id="banner" class="banner"></div>
+  <div id="warnings" class="card warn hidden"></div>
+  <p class="lead">Numbers, rankings and quotes come straight from your data. Text in <span class="ph">[[double brackets]]</span> needs a human (implications, recommendations, notable concerns). Use <code>**bold**</code> for emphasis. Everything below is editable.</p>
+  <div id="editor"></div>
+  <div class="actions"><button class="primary" data-go="s4">Continue to export →</button></div>
+</section>
+
+<!-- STEP 4 -->
+<section id="s4" class="step">
+  <h1>4 · Preview &amp; download</h1>
+  <div class="card">
+    <div class="actions">
+      <button class="primary" id="btnPreview">Generate preview (PDF)</button>
+      <button id="btnPptx">Download PowerPoint (.pptx)</button>
+      <button id="btnPdf">Download PDF</button>
+    </div>
+    <label class="check"><input type="checkbox" id="allowPh"> Export even if <span class="ph">[[placeholders]]</span> are still present</label>
+    <div id="exportMsg" class="note"></div>
+  </div>
+  <iframe id="preview" title="Report preview" class="hidden"></iframe>
+  <div class="card"><h3>Final review checklist</h3>
+  <ul class="check-list">
+    <li>Totals and rankings match your source sheet</li><li>Quotes are the real messages/responses (flagged ones checked)</li><li>All <span class="ph">[[placeholders]]</span> replaced</li>
+    <li>Trends only claimed where a previous period exists</li><li>Recommendations are labelled as proposals, not approved commitments</li><li>No customer personal data in quotes or screenshots</li></ul></div>
+</section>
+</main>
+
+<script src="vendor/papaparse.min.js"></script>
+<script src="vendor/xlsx.full.min.js"></script>
+<script src="analyze.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

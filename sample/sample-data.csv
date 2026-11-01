@@ -1,0 +1,30 @@
+Channel,Inquiry Theme,Count,Actual Message,Response / Seeded Reply,Period
+Private Messages,Loan Payment / Deduction,178,"FICTIONAL: Hi, my loan shows overdue but I already paid on the due date. Please check.",FICTIONAL: Hello! We're sorry for the inconvenience. Our team is verifying your payment and will update your account status shortly.,current
+Private Messages,App Login Issues,161,FICTIONAL: I can't sign in to the app after updating it. It keeps saying try again.,FICTIONAL: Hi! Sorry you're having trouble logging in. Please send your registered mobile number so we can assist.,current
+Private Messages,Account Locked,67,FICTIONAL: Why is my account locked? I need to withdraw today.,FICTIONAL: We understand how frustrating this is. Our team is reviewing your account and will follow up.,current
+Private Messages,Verification Failed,47,FICTIONAL: Face verification keeps failing even in bright light.,"FICTIONAL: Please try again in a well-lit area. If it persists, we'll escalate your case.",current
+Private Messages,OTP Not Received,35,FICTIONAL: I never get the code on my phone.,FICTIONAL: Thanks for reaching out. We're checking the OTP delivery to your registered number.,current
+Private Messages,General How-To,30,FICTIONAL: How do I send money to another bank?,FICTIONAL: You can transfer from the Send tab. Here are the steps...,current
+Private Messages,Fee Inquiry,22,FICTIONAL: Is there a fee for cash-in?,FICTIONAL: Cash-in via partner outlets may carry a small fee; see our fee schedule.,current
+Public Comments,App Login Issues,74,"FICTIONAL: Hindi ako makapag-login sa app, ano gagawin?",FICTIONAL: Hi! Sorry for the trouble. Please send us a private message so we can help.,current
+Public Comments,Loan Payment / Deduction,28,FICTIONAL: Nabawas na pero overdue pa rin sa app.,FICTIONAL: We're sorry for the confusion. Our team will check this via private message.,current
+Public Comments,Withdrawal Delayed,16,FICTIONAL: 3 days na hindi pa rin pumapasok ang withdrawal ko.,FICTIONAL: Please share your reference number via private message.,current
+Public Comments,Face Verification,14,FICTIONAL: Bakit palaging failed ang selfie?,FICTIONAL: Please message us so we can guide you through the steps.,current
+Public Comments,OTP Not Received,9,FICTIONAL: Walang OTP na dumadating.,FICTIONAL: Let's check this with you privately. Please send us a message.,current
+Seeded Posts,App Login Issues,15,FICTIONAL: Anyone else having trouble logging in today?,,current
+Seeded Posts,OTP Not Received,5,FICTIONAL: Walang OTP sa akin ngayon.,,current
+Seeded Posts,General How-To,5,FICTIONAL: Paano mag-transfer sa ibang bank?,,current
+Seeded Posts,Balance Not Updating,4,FICTIONAL: Hindi nag-uupdate balance ko.,,current
+Seeded Posts,App Error / Maintenance,4,FICTIONAL: Nag-error ang app kanina.,,current
+Seeded Posts,Positive Feedback,22,"FICTIONAL: Ang bilis ng support kahapon, salamat!",,current
+Seeded Replies,App Login Issues,6,"FICTIONAL: Can't log in, ano gagawin?","FICTIONAL: Try updating the app first, then message us if it persists.",current
+Seeded Replies,Face Verification,1,FICTIONAL: Bakit failed ang selfie ko?,FICTIONAL: Try again in good lighting.,current
+Seeded Replies,Loan Payment / Deduction,1,FICTIONAL: Overdue pa rin ang loan ko?,FICTIONAL: Please message our page so we can check.,current
+Seeded Replies,Loan Cancel,1,FICTIONAL: Paano mag-cancel ng loan?,FICTIONAL: Please message our page to raise your concern.,current
+Private Messages,Loan Payment / Deduction,150,,,previous
+Private Messages,App Login Issues,190,,,previous
+Private Messages,Account Locked,40,,,previous
+Public Comments,App Login Issues,60,,,previous
+Public Comments,Loan Payment / Deduction,31,,,previous
+Seeded Posts,App Login Issues,10,,,previous
+Seeded Replies,App Login Issues,3,,,previous
